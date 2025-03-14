@@ -1,4 +1,4 @@
-function setGameBoard () {
+function setGameBoard() {
     const gameBoard = [[1, 2, 3], [4, 5, 6], [7, 8, 9]];
 
     // possible/available cells to choose from
@@ -92,4 +92,50 @@ function diagonalChecker(gameBoard) {
         }
     }
     return null;
+}
+
+const [gameboard, possiblePositions] = setGameBoard();
+const originalPositions = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+
+displayBoard(gameboard);
+const player1Token = 'x';
+const player2Token = '0';
+let row;
+let col;
+
+let player1Position;
+let player2Position;
+
+gameloop: while (true) {
+    player1Position = Number(prompt('Player1 Choose a position from 1 to 9'));
+
+    // Player can only select available cells
+    if (!possiblePositions.includes(player1Position)) {
+        continue;
+    }
+
+    console.clear();
+
+    row = gameboard.findIndex(subArray => subArray.includes(player1Position));
+    col = gameboard[row].findIndex(val => val === player1Position);
+    gameboard[row][col] = player1Token;
+    possiblePositions.splice(possiblePositions.findIndex(val => val === player1Position), 1);
+
+    displayBoard(gameboard);
+
+    player2Position = Number(prompt('Player2 Choose a position from 1 to 9'));
+    if (!possiblePositions.includes(player2Position)) {
+        continue;
+    }
+
+    console.clear();
+
+    row = gameboard.findIndex(subArray => subArray.includes(player2Position));
+    col = gameboard[row].findIndex(val => val === player2Position);
+    gameboard[row][col] = player2Token;
+    possiblePositions.splice(possiblePositions.findIndex(val => val === player2Position), 1);
+
+    displayBoard(gameboard);
+
 }
