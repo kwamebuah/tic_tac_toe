@@ -131,7 +131,7 @@ while (true) {
         displayBoard(gameboard);
 
         // Tie Condition
-        if (!gameboard.flat().some(r => originalPositions.includes(r))) {
+        if (!gameboard.flat().some(val => originalPositions.includes(val))) {
             console.log("It's a tie");
             break gameloop;
         }
@@ -166,7 +166,7 @@ while (true) {
         displayBoard(gameboard);
 
         // Tie Condition
-        if (!gameboard.flat().some(r => originalPositions.includes(r))) {
+        if (!gameboard.flat().some(val => originalPositions.includes(val))) {
             console.log("It's a tie");
             break gameloop;
         }
