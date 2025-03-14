@@ -124,6 +124,12 @@ gameloop: while (true) {
 
     displayBoard(gameboard);
 
+    // Tie Condition
+    if (!gameboard.flat().some(r => originalPositions.includes(r))) {
+        console.log("It's a tie");
+        break gameloop;
+    }
+
     player2Position = Number(prompt('Player2 Choose a position from 1 to 9'));
     if (!possiblePositions.includes(player2Position)) {
         continue;
@@ -138,4 +144,9 @@ gameloop: while (true) {
 
     displayBoard(gameboard);
 
+    // Tie Condition
+    if (!gameboard.flat().some(r => originalPositions.includes(r))) {
+        console.log("It's a tie");
+        break gameloop;
+    }
 }
