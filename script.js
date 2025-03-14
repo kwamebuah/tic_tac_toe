@@ -130,6 +130,21 @@ gameloop: while (true) {
         break gameloop;
     }
 
+    // Win Condition
+    let checkWinnerRow = colChecker(gameboard);
+    let checkWinnerCol = rowChecker(gameboard);
+    let checkWinnerDiag = diagonalChecker(gameboard);
+    if (checkWinnerRow !== null || checkWinnerCol !== null || checkWinnerDiag !== null) {
+        if (checkWinnerRow === player1Token || checkWinnerCol === player1Token || checkWinnerDiag === player1Token) {
+            console.log('Player1 Wins');
+            break gameloop;
+        }
+        else if (checkWinnerRow === player2Token || checkWinnerCol === player2Token || checkWinnerDiag === player2Token) {
+            console.log('Player2 Wins');
+            break gameloop;
+        }
+    }
+
     player2Position = Number(prompt('Player2 Choose a position from 1 to 9'));
     if (!possiblePositions.includes(player2Position)) {
         continue;
@@ -148,5 +163,20 @@ gameloop: while (true) {
     if (!gameboard.flat().some(r => originalPositions.includes(r))) {
         console.log("It's a tie");
         break gameloop;
+    }
+
+    // Win Condition
+    checkWinnerRow = colChecker(gameboard);
+    checkWinnerCol = rowChecker(gameboard);
+    checkWinnerDiag = diagonalChecker(gameboard);
+    if (checkWinnerRow !== null || checkWinnerCol !== null || checkWinnerDiag !== null) {
+        if (checkWinnerRow === player1Token || checkWinnerCol === player1Token || checkWinnerDiag === player1Token) {
+            console.log('Player1 Wins');
+            break gameloop;
+        }
+        else if (checkWinnerRow === player2Token || checkWinnerCol === player2Token || checkWinnerDiag === player2Token) {
+            console.log('Player2 Wins');
+            break gameloop;
+        }
     }
 }
