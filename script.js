@@ -135,39 +135,37 @@ while (true) {
     }
 
     const { getGameBoard, getPossiblePositions } = setGameBoard();
-    const originalPositions = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    
 
     console.log(displayBoard(getGameBoard()));
 
     const { playerOne, playerTwo } = getPlayers('Kofi', 'Mina');
     // const player1Token = 'x';
     // const player2Token = '0';
+    playRound(getGameBoard(), getPossiblePositions(), playerOne, playerTwo);
+}
 
-    let row;
-    let col;
-
-    let player1Position;
-    let player2Position;
-
+function playRound(gameBoard, possiblePositions, playerOne, playerTwo) {
+    const originalPositions = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     gameloop: while (true) {
-        player1Position = Number(prompt(`${playerOne.name} Choose a position from 1 to 9`));
+        let player1Position = Number(prompt(`${playerOne.name} Choose a position from 1 to 9`));
 
         // Player can only select available cells
-        if (!getPossiblePositions().includes(player1Position)) {
+        if (!possiblePositions.includes(player1Position)) {
             continue;
         }
 
         console.clear();
 
-        row = getGameBoard().findIndex(subArray => subArray.includes(player1Position));
-        col = getGameBoard()[row].findIndex(val => val === player1Position);
-        getGameBoard()[row][col] = playerOne.token;
-        getPossiblePositions().splice(getPossiblePositions().findIndex(val => val === player1Position), 1);
+        let row = gameBoard.findIndex(subArray => subArray.includes(player1Position));
+        let col = gameBoard[row].findIndex(val => val === player1Position);
+        gameBoard[row][col] = playerOne.token;
+        possiblePositions.splice(possiblePositions.findIndex(val => val === player1Position), 1);
 
-        console.log(displayBoard(getGameBoard()));
+        console.log(displayBoard(gameBoard));
 
         // Tie Condition
-        if (!getGameBoard().flat().some(val => originalPositions.includes(val))) {
+        if (!gameBoard.flat().some(val => originalPositions.includes(val))) {
             console.log("It's a tie");
             break gameloop;
         }
@@ -188,28 +186,28 @@ while (true) {
         // }
 
         // Win Condition
-        let { hasWinner, winner } = checkforWin(getGameBoard(), playerOne, playerTwo);
+        let { hasWinner, winner } = checkforWin(gameBoard, playerOne, playerTwo);
         if (hasWinner) {
             console.log(`${winner.name} wins`);
             break gameloop;
         }
 
-        player2Position = Number(prompt(`${playerOne.name} Choose a position from 1 to 9`));
-        if (!getPossiblePositions().includes(player2Position)) {
+        let player2Position = Number(prompt(`${playerOne.name} Choose a position from 1 to 9`));
+        if (!possiblePositions.includes(player2Position)) {
             continue;
         }
 
         console.clear();
 
-        row = getGameBoard().findIndex(subArray => subArray.includes(player2Position));
-        col = getGameBoard()[row].findIndex(val => val === player2Position);
-        getGameBoard()[row][col] = playerTwo.token;
-        getPossiblePositions().splice(getPossiblePositions().findIndex(val => val === player2Position), 1);
+        row = gameBoard.findIndex(subArray => subArray.includes(player2Position));
+        col = gameBoard[row].findIndex(val => val === player2Position);
+        gameBoard[row][col] = playerTwo.token;
+        possiblePositions.splice(possiblePositions.findIndex(val => val === player2Position), 1);
 
-        console.log(displayBoard(getGameBoard()));
+        console.log(displayBoard(gameBoard));
 
         // Tie Condition
-        if (!getGameBoard().flat().some(val => originalPositions.includes(val))) {
+        if (!gameBoard.flat().some(val => originalPositions.includes(val))) {
             console.log("It's a tie");
             break gameloop;
         }
@@ -217,7 +215,7 @@ while (true) {
         // Win Condition
         // 
         // Win Condition
-        ({ hasWinner, winner } = checkforWin(getGameBoard(), playerOne, playerTwo));
+        ({ hasWinner, winner } = checkforWin(gameBoard, playerOne, playerTwo));
         if (hasWinner) {
             console.log(`${winner.name} wins`);
             break gameloop;
