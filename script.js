@@ -1,3 +1,10 @@
+function getPlayers(playerOneName = 'Player One', playerTwoName = 'Player Two') {
+    const playerOne = { name: playerOneName, token: 'X' };
+    const playerTwo = { name: playerTwoName, token: 'O' };
+
+    return { playerOne, playerTwo };
+}
+
 function setGameBoard() {
     const gameBoard = [[1, 2, 3], [4, 5, 6], [7, 8, 9]];
 
@@ -105,8 +112,11 @@ while (true) {
     const originalPositions = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
     displayBoard(gameboard);
-    const player1Token = 'x';
-    const player2Token = '0';
+
+    const { playerOne, playerTwo } = getPlayers('Kofi', 'Mina');
+    // const player1Token = 'x';
+    // const player2Token = '0';
+
     let row;
     let col;
 
@@ -114,7 +124,7 @@ while (true) {
     let player2Position;
 
     gameloop: while (true) {
-        player1Position = Number(prompt('Player1 Choose a position from 1 to 9'));
+        player1Position = Number(prompt(`${playerOne.name} Choose a position from 1 to 9`));
 
         // Player can only select available cells
         if (!possiblePositions.includes(player1Position)) {
@@ -125,7 +135,7 @@ while (true) {
 
         row = gameboard.findIndex(subArray => subArray.includes(player1Position));
         col = gameboard[row].findIndex(val => val === player1Position);
-        gameboard[row][col] = player1Token;
+        gameboard[row][col] = playerOne.token;
         possiblePositions.splice(possiblePositions.findIndex(val => val === player1Position), 1);
 
         displayBoard(gameboard);
@@ -141,17 +151,17 @@ while (true) {
         let checkWinnerCol = rowChecker(gameboard);
         let checkWinnerDiag = diagonalChecker(gameboard);
         if (checkWinnerRow !== null || checkWinnerCol !== null || checkWinnerDiag !== null) {
-            if (checkWinnerRow === player1Token || checkWinnerCol === player1Token || checkWinnerDiag === player1Token) {
+            if (checkWinnerRow === playerOne.token || checkWinnerCol === playerOne.token || checkWinnerDiag === playerOne.token) {
                 console.log('Player1 Wins');
                 break gameloop;
             }
-            else if (checkWinnerRow === player2Token || checkWinnerCol === player2Token || checkWinnerDiag === player2Token) {
+            else if (checkWinnerRow === playerTwo.token || checkWinnerCol === playerTwo.token || checkWinnerDiag === playerTwo.token) {
                 console.log('Player2 Wins');
                 break gameloop;
             }
         }
 
-        player2Position = Number(prompt('Player2 Choose a position from 1 to 9'));
+        player2Position = Number(prompt(`${playerOne.name} Choose a position from 1 to 9`));
         if (!possiblePositions.includes(player2Position)) {
             continue;
         }
@@ -160,7 +170,7 @@ while (true) {
 
         row = gameboard.findIndex(subArray => subArray.includes(player2Position));
         col = gameboard[row].findIndex(val => val === player2Position);
-        gameboard[row][col] = player2Token;
+        gameboard[row][col] = playerTwo.token;
         possiblePositions.splice(possiblePositions.findIndex(val => val === player2Position), 1);
 
         displayBoard(gameboard);
@@ -176,11 +186,11 @@ while (true) {
         checkWinnerCol = rowChecker(gameboard);
         checkWinnerDiag = diagonalChecker(gameboard);
         if (checkWinnerRow !== null || checkWinnerCol !== null || checkWinnerDiag !== null) {
-            if (checkWinnerRow === player1Token || checkWinnerCol === player1Token || checkWinnerDiag === player1Token) {
+            if (checkWinnerRow === playerOne.token || checkWinnerCol === playerOne.token || checkWinnerDiag === playerOne.token) {
                 console.log('Player1 Wins');
                 break gameloop;
             }
-            else if (checkWinnerRow === player2Token || checkWinnerCol === player2Token || checkWinnerDiag === player2Token) {
+            else if (checkWinnerRow === playerTwo.token || checkWinnerCol === playerTwo.token || checkWinnerDiag === playerTwo.token) {
                 console.log('Player2 Wins');
                 break gameloop;
             }
