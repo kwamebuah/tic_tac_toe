@@ -107,6 +107,26 @@ function diagonalChecker(gameBoard) {
     return null;
 }
 
+function checkforWin(gameBoard, playerOne, playerTwo) {
+    const players = [playerOne, playerTwo];
+    const checkResults = [colChecker(gameBoard), rowChecker(gameBoard), diagonalChecker(gameBoard)];
+    let hasWinner = false;
+    let winner = null;
+
+    for (const result of checkResults) {
+        if (result !== null) {
+            for (const player of players) {
+                if (player.token === result) {
+                    hasWinner = true;
+                    winner = player;
+                    return { hasWinner, winner };
+                }
+            }
+        }
+    }
+    return { hasWinner, winner };
+}
+
 while (true) {
     let playGameChoice = prompt('Play tic_tac_toe? (y/n)');
 
@@ -153,18 +173,25 @@ while (true) {
         }
 
         // Win Condition
-        let checkWinnerRow = colChecker(getGameBoard());
-        let checkWinnerCol = rowChecker(getGameBoard());
-        let checkWinnerDiag = diagonalChecker(getGameBoard());
-        if (checkWinnerRow !== null || checkWinnerCol !== null || checkWinnerDiag !== null) {
-            if (checkWinnerRow === playerOne.token || checkWinnerCol === playerOne.token || checkWinnerDiag === playerOne.token) {
-                console.log('Player1 Wins');
-                break gameloop;
-            }
-            else if (checkWinnerRow === playerTwo.token || checkWinnerCol === playerTwo.token || checkWinnerDiag === playerTwo.token) {
-                console.log('Player2 Wins');
-                break gameloop;
-            }
+        // let checkWinnerRow = colChecker(getGameBoard());
+        // let checkWinnerCol = rowChecker(getGameBoard());
+        // let checkWinnerDiag = diagonalChecker(getGameBoard());
+        // if (checkWinnerRow !== null || checkWinnerCol !== null || checkWinnerDiag !== null) {
+        //     if (checkWinnerRow === playerOne.token || checkWinnerCol === playerOne.token || checkWinnerDiag === playerOne.token) {
+        //         console.log('Player1 Wins');
+        //         break gameloop;
+        //     }
+        //     else if (checkWinnerRow === playerTwo.token || checkWinnerCol === playerTwo.token || checkWinnerDiag === playerTwo.token) {
+        //         console.log('Player2 Wins');
+        //         break gameloop;
+        //     }
+        // }
+
+        // Win Condition
+        let { hasWinner, winner } = checkforWin(getGameBoard(), playerOne, playerTwo);
+        if (hasWinner) {
+            console.log(`${winner.name} wins`);
+            break gameloop;
         }
 
         player2Position = Number(prompt(`${playerOne.name} Choose a position from 1 to 9`));
@@ -188,18 +215,12 @@ while (true) {
         }
 
         // Win Condition
-        checkWinnerRow = colChecker(getGameBoard());
-        checkWinnerCol = rowChecker(getGameBoard());
-        checkWinnerDiag = diagonalChecker(getGameBoard());
-        if (checkWinnerRow !== null || checkWinnerCol !== null || checkWinnerDiag !== null) {
-            if (checkWinnerRow === playerOne.token || checkWinnerCol === playerOne.token || checkWinnerDiag === playerOne.token) {
-                console.log('Player1 Wins');
-                break gameloop;
-            }
-            else if (checkWinnerRow === playerTwo.token || checkWinnerCol === playerTwo.token || checkWinnerDiag === playerTwo.token) {
-                console.log('Player2 Wins');
-                break gameloop;
-            }
+        // 
+        // Win Condition
+        ({ hasWinner, winner } = checkforWin(getGameBoard(), playerOne, playerTwo));
+        if (hasWinner) {
+            console.log(`${winner.name} wins`);
+            break gameloop;
         }
     }
 }
