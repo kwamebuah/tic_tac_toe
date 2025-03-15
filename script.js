@@ -10,7 +10,11 @@ function setGameBoard() {
 
     // possible/available cells to choose from
     const possiblePositions = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-    return [gameBoard, possiblePositions];
+
+    const getGameBoard = () => gameBoard;
+    const getPossiblePositions = () => possiblePositions;
+
+    return { getGameBoard, getPossiblePositions };
 }
 
 function displayBoard(gameboard) {
@@ -108,10 +112,10 @@ while (true) {
         break;
     }
 
-    const [gameboard, possiblePositions] = setGameBoard();
+    const { getGameBoard, getPossiblePositions } = setGameBoard();
     const originalPositions = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-    displayBoard(gameboard);
+    displayBoard(getGameBoard());
 
     const { playerOne, playerTwo } = getPlayers('Kofi', 'Mina');
     // const player1Token = 'x';
@@ -127,29 +131,29 @@ while (true) {
         player1Position = Number(prompt(`${playerOne.name} Choose a position from 1 to 9`));
 
         // Player can only select available cells
-        if (!possiblePositions.includes(player1Position)) {
+        if (!getPossiblePositions().includes(player1Position)) {
             continue;
         }
 
         console.clear();
 
-        row = gameboard.findIndex(subArray => subArray.includes(player1Position));
-        col = gameboard[row].findIndex(val => val === player1Position);
-        gameboard[row][col] = playerOne.token;
-        possiblePositions.splice(possiblePositions.findIndex(val => val === player1Position), 1);
+        row = getGameBoard().findIndex(subArray => subArray.includes(player1Position));
+        col = getGameBoard()[row].findIndex(val => val === player1Position);
+        getGameBoard()[row][col] = playerOne.token;
+        getPossiblePositions().splice(getPossiblePositions().findIndex(val => val === player1Position), 1);
 
-        displayBoard(gameboard);
+        displayBoard(getGameBoard());
 
         // Tie Condition
-        if (!gameboard.flat().some(val => originalPositions.includes(val))) {
+        if (!getGameBoard().flat().some(val => originalPositions.includes(val))) {
             console.log("It's a tie");
             break gameloop;
         }
 
         // Win Condition
-        let checkWinnerRow = colChecker(gameboard);
-        let checkWinnerCol = rowChecker(gameboard);
-        let checkWinnerDiag = diagonalChecker(gameboard);
+        let checkWinnerRow = colChecker(getGameBoard());
+        let checkWinnerCol = rowChecker(getGameBoard());
+        let checkWinnerDiag = diagonalChecker(getGameBoard());
         if (checkWinnerRow !== null || checkWinnerCol !== null || checkWinnerDiag !== null) {
             if (checkWinnerRow === playerOne.token || checkWinnerCol === playerOne.token || checkWinnerDiag === playerOne.token) {
                 console.log('Player1 Wins');
@@ -162,29 +166,29 @@ while (true) {
         }
 
         player2Position = Number(prompt(`${playerOne.name} Choose a position from 1 to 9`));
-        if (!possiblePositions.includes(player2Position)) {
+        if (!getPossiblePositions().includes(player2Position)) {
             continue;
         }
 
         console.clear();
 
-        row = gameboard.findIndex(subArray => subArray.includes(player2Position));
-        col = gameboard[row].findIndex(val => val === player2Position);
-        gameboard[row][col] = playerTwo.token;
-        possiblePositions.splice(possiblePositions.findIndex(val => val === player2Position), 1);
+        row = getGameBoard().findIndex(subArray => subArray.includes(player2Position));
+        col = getGameBoard()[row].findIndex(val => val === player2Position);
+        getGameBoard()[row][col] = playerTwo.token;
+        getPossiblePositions().splice(getPossiblePositions().findIndex(val => val === player2Position), 1);
 
-        displayBoard(gameboard);
+        displayBoard(getGameBoard());
 
         // Tie Condition
-        if (!gameboard.flat().some(val => originalPositions.includes(val))) {
+        if (!getGameBoard().flat().some(val => originalPositions.includes(val))) {
             console.log("It's a tie");
             break gameloop;
         }
 
         // Win Condition
-        checkWinnerRow = colChecker(gameboard);
-        checkWinnerCol = rowChecker(gameboard);
-        checkWinnerDiag = diagonalChecker(gameboard);
+        checkWinnerRow = colChecker(getGameBoard());
+        checkWinnerCol = rowChecker(getGameBoard());
+        checkWinnerDiag = diagonalChecker(getGameBoard());
         if (checkWinnerRow !== null || checkWinnerCol !== null || checkWinnerDiag !== null) {
             if (checkWinnerRow === playerOne.token || checkWinnerCol === playerOne.token || checkWinnerDiag === playerOne.token) {
                 console.log('Player1 Wins');
