@@ -127,15 +127,13 @@ function checkforWin(gameBoard, playerOne, playerTwo) {
     return { hasWinner, winner };
 }
 
-while (true) {
+(function playGame() {
     let playGameChoice = prompt('Play tic_tac_toe? (y/n)');
-
     if (playGameChoice === 'n' || playGameChoice === "") {
-        break;
+        return;
     }
 
     const { getGameBoard, getPossiblePositions } = setGameBoard();
-    
 
     console.log(displayBoard(getGameBoard()));
 
@@ -143,7 +141,8 @@ while (true) {
     // const player1Token = 'x';
     // const player2Token = '0';
     playRound(getGameBoard(), getPossiblePositions(), playerOne, playerTwo);
-}
+    playGame();
+})();
 
 function playRound(gameBoard, possiblePositions, playerOne, playerTwo) {
     const originalPositions = [1, 2, 3, 4, 5, 6, 7, 8, 9];
