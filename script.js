@@ -138,8 +138,7 @@ function checkforWin(gameBoard, playerOne, playerTwo) {
     console.log(displayBoard(getGameBoard()));
 
     const { playerOne, playerTwo } = getPlayers('Kofi', 'Mina');
-    // const player1Token = 'x';
-    // const player2Token = '0';
+
     playRound(getGameBoard(), getPossiblePositions(), playerOne, playerTwo);
     playGame();
 })();
@@ -170,21 +169,6 @@ function playRound(gameBoard, possiblePositions, playerOne, playerTwo) {
         }
 
         // Win Condition
-        // let checkWinnerRow = colChecker(getGameBoard());
-        // let checkWinnerCol = rowChecker(getGameBoard());
-        // let checkWinnerDiag = diagonalChecker(getGameBoard());
-        // if (checkWinnerRow !== null || checkWinnerCol !== null || checkWinnerDiag !== null) {
-        //     if (checkWinnerRow === playerOne.token || checkWinnerCol === playerOne.token || checkWinnerDiag === playerOne.token) {
-        //         console.log('Player1 Wins');
-        //         break gameloop;
-        //     }
-        //     else if (checkWinnerRow === playerTwo.token || checkWinnerCol === playerTwo.token || checkWinnerDiag === playerTwo.token) {
-        //         console.log('Player2 Wins');
-        //         break gameloop;
-        //     }
-        // }
-
-        // Win Condition
         let { hasWinner, winner } = checkforWin(gameBoard, playerOne, playerTwo);
         if (hasWinner) {
             console.log(`${winner.name} wins`);
@@ -211,8 +195,6 @@ function playRound(gameBoard, possiblePositions, playerOne, playerTwo) {
             break gameloop;
         }
 
-        // Win Condition
-        // 
         // Win Condition
         ({ hasWinner, winner } = checkforWin(gameBoard, playerOne, playerTwo));
         if (hasWinner) {
