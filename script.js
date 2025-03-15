@@ -20,13 +20,15 @@ function setGameBoard() {
 function displayBoard(gameboard) {
     const numRows = gameboard.length;
     const numCols = gameboard[0].length;
+    let boardDisplay = '';
     for (let i = 0; i < numRows; i++) {
-        let row = '|';
+        boardDisplay += '|';
         for (let j = 0; j < numCols; j++) {
-            row += `${gameboard[i][j]}|`;
+            boardDisplay += `${gameboard[i][j]}|`;
         }
-        console.log(row);
+        boardDisplay += '\n';
     }
+    return boardDisplay;
 }
 
 function colChecker(gameBoard) {
@@ -115,7 +117,7 @@ while (true) {
     const { getGameBoard, getPossiblePositions } = setGameBoard();
     const originalPositions = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-    displayBoard(getGameBoard());
+    console.log(displayBoard(getGameBoard()));
 
     const { playerOne, playerTwo } = getPlayers('Kofi', 'Mina');
     // const player1Token = 'x';
@@ -142,7 +144,7 @@ while (true) {
         getGameBoard()[row][col] = playerOne.token;
         getPossiblePositions().splice(getPossiblePositions().findIndex(val => val === player1Position), 1);
 
-        displayBoard(getGameBoard());
+        console.log(displayBoard(getGameBoard()));
 
         // Tie Condition
         if (!getGameBoard().flat().some(val => originalPositions.includes(val))) {
@@ -177,7 +179,7 @@ while (true) {
         getGameBoard()[row][col] = playerTwo.token;
         getPossiblePositions().splice(getPossiblePositions().findIndex(val => val === player2Position), 1);
 
-        displayBoard(getGameBoard());
+        console.log(displayBoard(getGameBoard()));
 
         // Tie Condition
         if (!getGameBoard().flat().some(val => originalPositions.includes(val))) {
