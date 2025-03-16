@@ -1,8 +1,19 @@
-function getPlayers(playerOneName = 'Player One', playerTwoName = 'Player Two') {
-    const playerOne = { name: playerOneName, token: 'X' };
-    const playerTwo = { name: playerTwoName, token: 'O' };
+function createPlayer(playerName, playerNumber) {
+    let name = playerName;
+    const token = playerNumber === 1 ? 'X' : 'O';
+    let score = 0;
 
-    return { playerOne, playerTwo };
+    if (playerName === "" && playerNumber === 1) {
+        name = 'Player One';
+    }
+    if (playerName === "" && playerNumber === 2) {
+        name = 'Player Two';
+    }
+    
+    const giveScore = () => score++;
+    const getScore = () => score;
+
+    return { name, token, getScore, giveScore };
 }
 
 function setGameBoard() {
@@ -133,11 +144,17 @@ function checkforWin(gameBoard, playerOne, playerTwo) {
         return;
     }
 
+    // Create players
+    const player1Number = 1;
+    const player2Number = 2;
+    let player1Name = prompt('Player 1 Please enter your name');
+    let player2Name = prompt('Player 2 Please enter your name');
+    const playerOne = createPlayer(player1Name, player1Number);
+    const playerTwo = createPlayer(player2Name, player2Number);
+
     const { getGameBoard, getPossiblePositions } = setGameBoard();
 
     console.log(displayBoard(getGameBoard()));
-
-    const { playerOne, playerTwo } = getPlayers('Kofi', 'Mina');
 
     playRound(getGameBoard(), getPossiblePositions(), playerOne, playerTwo);
     playGame();
