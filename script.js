@@ -175,7 +175,7 @@ function playRound(gameBoard, possiblePositions, playerOne, playerTwo) {
             break gameloop;
         }
 
-        let player2Position = Number(prompt(`${playerOne.name} Choose a position from 1 to 9`));
+        let player2Position = Number(prompt(`${playerTwo.name} Choose a position from 1 to 9`));
         if (!possiblePositions.includes(player2Position)) {
             continue;
         }
