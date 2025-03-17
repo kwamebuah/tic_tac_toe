@@ -237,3 +237,23 @@ function playRound(gameBoard, possiblePositions, playerOne, playerTwo, gameTie) 
         }
     }
 }
+
+/* User Interface */
+function displayController() {
+    const gameBoard = setGameBoard().getGameBoard();
+    const boardDiv = document.querySelector('.gameboard');
+
+    gameBoard.forEach(row => {
+        row.forEach(col => {
+            const cell = document.createElement('button');
+            cell.classList.add('cell');
+            cell.dataset.column = col;
+            cell.textContent = col.getValue();
+            boardDiv.appendChild(cell);
+        });
+    });
+
+    
+}
+
+displayController()
