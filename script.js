@@ -154,14 +154,15 @@ function checkforWin(gameBoard, playerOne, playerTwo) {
     const playerTwo = createPlayer(player2Name, player2Number);
 
     const { getGameBoard, getPossiblePositions } = setGameBoard();
-
     console.log(displayBoard(getGameBoard()));
 
-    playRound(getGameBoard(), getPossiblePositions(), playerOne, playerTwo);
+    const gameTie = {tie: 0};
+
+    playRound(getGameBoard(), getPossiblePositions(), playerOne, playerTwo, gameTie);
     playGame();
 })();
 
-function playRound(gameBoard, possiblePositions, playerOne, playerTwo) {
+function playRound(gameBoard, possiblePositions, playerOne, playerTwo, gameTie) {
     const originalPositions = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     gameloop: while (true) {
         let player1Position = Number(prompt(`${playerOne.name} Choose a position from 1 to 9`));
@@ -182,6 +183,7 @@ function playRound(gameBoard, possiblePositions, playerOne, playerTwo) {
 
         // Tie Condition
         if (!gameBoard.flat().some(val => originalPositions.includes(val))) {
+            gameTie.tie++;
             console.log("It's a tie");
             break gameloop;
         }
@@ -209,6 +211,7 @@ function playRound(gameBoard, possiblePositions, playerOne, playerTwo) {
 
         // Tie Condition
         if (!gameBoard.flat().some(val => originalPositions.includes(val))) {
+            gameTie++;
             console.log("It's a tie");
             break gameloop;
         }
