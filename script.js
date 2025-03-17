@@ -9,7 +9,7 @@ function createPlayer(playerName, playerNumber) {
     if (playerName === "" && playerNumber === 2) {
         name = 'Player Two';
     }
-    
+
     const giveScore = () => score++;
     const getScore = () => score;
 
@@ -153,12 +153,25 @@ function checkforWin(gameBoard, playerOne, playerTwo) {
     const playerOne = createPlayer(player1Name, player1Number);
     const playerTwo = createPlayer(player2Name, player2Number);
 
-    const { getGameBoard, getPossiblePositions } = setGameBoard();
-    console.log(displayBoard(getGameBoard()));
+    const gameTie = { tie: 0 };
 
-    const gameTie = {tie: 0};
+    const numOfRounds = 5;
+    for (let round = 1; round <= numOfRounds; round++) {
+        console.log(`Round ${round}`);
 
-    playRound(getGameBoard(), getPossiblePositions(), playerOne, playerTwo, gameTie);
+        const { getGameBoard, getPossiblePositions } = setGameBoard();
+        console.log(displayBoard(getGameBoard()));
+
+        playRound(getGameBoard(), getPossiblePositions(), playerOne, playerTwo, gameTie);
+    }
+    // Score output
+    console.log('Score');
+    console.log(`${playerOne.name}: ${playerOne.getScore()}\n${playerTwo.name}: ${playerTwo.getScore()}\nTies: ${gameTie.tie}`);
+    let winner = playerOne.getScore() > playerTwo.getScore() ? playerOne.name 
+    : playerTwo.getScore() > playerOne.getScore() ? playerTwo.name
+    : 'No one';
+    console.log(`${winner} won!`);
+
     playGame();
 })();
 
