@@ -130,6 +130,7 @@ function checkforWin(gameBoard, playerOne, playerTwo) {
                 if (player.token === result) {
                     hasWinner = true;
                     winner = player;
+                    winner.giveScore();
                     return { hasWinner, winner };
                 }
             }
