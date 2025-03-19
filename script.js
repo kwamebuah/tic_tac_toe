@@ -73,7 +73,8 @@ function displayController() {
         const selectedCell = event.target.dataset.idx;
         // make sure we actually select a cell and not an empty gap
         if (!selectedCell) return;
-        
+        // check for already clicked cell
+        if (event.target.textContent !== "") return;
         game.playRound(selectedCell);
         updateScreen();
     });
