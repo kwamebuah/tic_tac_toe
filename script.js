@@ -69,6 +69,16 @@ function displayController() {
         }
     };
 
+    boardDiv.addEventListener('click', (event) => {
+        const selectedCell = event.target.dataset.idx;
+        // make sure we actually select a cell and not an empty gap
+        if (!selectedCell) return;
+        
+        game.playRound(selectedCell);
+        updateScreen();
+    });
+
+    // Initial screen update
     updateScreen();
 }
 
