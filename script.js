@@ -15,7 +15,7 @@ function GameBoard() {
     const checkWin = board => {
         let hasWin = false;
         let winToken = "";
-
+        let tie = false;
         const winPatterns = [
             [0, 1, 2],
             [3, 4, 5],
@@ -37,7 +37,14 @@ function GameBoard() {
                 hasWin = true;
             }
         });
-        return { hasWin, winToken };
+
+        if (!hasWin) {
+            const tieCond = board.every(cell => cell !== "");
+            if (tieCond) {
+                tie = true;
+            }
+        }
+        return { hasWin, winToken, tie };
     };
 
     return { getBoard, placeToken, checkWin };
@@ -69,9 +76,12 @@ function gameController() {
         board.placeToken(cell, getActivePlayer().token);
 
         console.log(board.getBoard());
-        let { hasWin, winToken } = board.checkWin(board.getBoard());
+        const { hasWin, winToken, tie } = board.checkWin(board.getBoard());
         if (hasWin && winToken === activePlayer.token) {
             console.log(`${activePlayer.name} wins`);
+        }
+        else if (tie) {
+            console.log("It's a tie");
         }
 
         switchTurn();
