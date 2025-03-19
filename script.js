@@ -12,7 +12,35 @@ function GameBoard() {
         board[index] = playerToken;
     }
 
-    return { getBoard, placeToken };
+    const checkWin = board => {
+        let hasWin = false;
+        let winToken = "";
+
+        const winPatterns = [
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 3, 6],
+            [1, 4, 7],
+            [2, 5, 8],
+            [0, 4, 8],
+            [2, 4, 6]
+        ];
+
+        winPatterns.forEach(pattern => {
+            let pos1Val = board[pattern[0]];
+            let pos2Val = board[pattern[1]];
+            let pos3Val = board[pattern[2]];
+
+            if (pos1Val !== "" && pos1Val === pos2Val && pos2Val === pos3Val) {
+                winToken = pos1Val;
+                hasWin = true;
+            }
+        });
+        return { hasWin, winToken };
+    };
+
+    return { getBoard, placeToken, checkWin };
 }
 
 function gameController() {
@@ -41,6 +69,10 @@ function gameController() {
         board.placeToken(cell, getActivePlayer().token);
 
         console.log(board.getBoard());
+        let { hasWin, winToken } = board.checkWin(board.getBoard());
+        if (hasWin && winToken === activePlayer.token) {
+            console.log(`${activePlayer.name} wins`);
+        }
 
         switchTurn();
 
