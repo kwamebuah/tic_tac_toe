@@ -72,6 +72,12 @@ function gameController() {
     };
     const getActivePlayer = () => activePlayer;
 
+    let roundEnd = false;
+    const endRound = () => {
+        roundEnd = true;
+    };
+    const getRoundState = () => roundEnd;
+
     const playRound = (cell) => {
         board.placeToken(cell, getActivePlayer().token);
 
@@ -79,16 +85,20 @@ function gameController() {
         const { hasWin, winToken, tie } = board.checkWin(board.getBoard());
         if (hasWin && winToken === activePlayer.token) {
             console.log(`${activePlayer.name} wins`);
+            endRound();
         }
         else if (tie) {
             console.log("It's a tie");
+            endRound();
         }
 
         switchTurn();
 
     };
 
-    return { playRound, getActivePlayer, getBoard: board.getBoard };
+
+
+    return { playRound, getActivePlayer, getBoard: board.getBoard, getRoundState };
 }
 
 function displayController() {
@@ -111,6 +121,13 @@ function displayController() {
         }
     };
 
+    const endRound = () => {
+        const cells = document.querySelectorAll('.cell');
+        for (let cell of cells) {
+            cell.disabled = true;
+        }
+    };
+
     boardDiv.addEventListener('click', (event) => {
         const selectedCell = event.target.dataset.idx;
         // make sure we actually select a cell and not an empty gap
@@ -119,6 +136,9 @@ function displayController() {
         if (event.target.textContent !== "") return;
         game.playRound(selectedCell);
         updateScreen();
+        if (game.getRoundState()) {
+            endRound();
+        }
     });
 
     // Initial screen update
