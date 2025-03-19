@@ -60,6 +60,13 @@ function displayController() {
         const activePlayer = game.getActivePlayer();
 
         gameStateDisplay.textContent = `${activePlayer.name}'s turn.`;
+        for (let i = 0; i < board.length; i++) {
+            const cell = document.createElement('button');
+            cell.classList.add('cell');
+            cell.dataset.idx = i + 1;
+            cell.textContent = board[i];
+            boardDiv.appendChild(cell);
+        }
     };
 
     updateScreen();
