@@ -81,7 +81,6 @@ function gameController() {
     const playRound = (cell) => {
         board.placeToken(cell, getActivePlayer().token);
 
-        console.log(board.getBoard());
         const { hasWin, winToken, tie } = board.checkWin(board.getBoard());
         if (hasWin && winToken === activePlayer.token) {
             console.log(`${activePlayer.name} wins`);
