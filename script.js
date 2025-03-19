@@ -6,8 +6,13 @@ function GameBoard() {
         board.push("");
     }
     const getBoard = () => board;
+
+    const placeToken = (selectedCell, playerToken) => {
+        const index = (board.length - (board.length - selectedCell)) - 1;
+        board[index] = playerToken;
+    }
     
-    return { getBoard };
+    return { getBoard, placeToken };
 }
 
 function gameController() {
@@ -32,5 +37,17 @@ function gameController() {
     };
     const getActivePlayer = () => activePlayer;
 
-    switchTurn();
+    const playRound = (cell) => {
+        board.placeToken(cell, getActivePlayer().token);
+
+        console.log(board.getBoard());
+
+        switchTurn();
+
+    };
+
+    let cellPos = 4
+    playRound(cellPos);
 }
+
+gameController();
