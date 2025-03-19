@@ -11,7 +11,7 @@ function GameBoard() {
         const index = (board.length - (board.length - selectedCell)) - 1;
         board[index] = playerToken;
     }
-    
+
     return { getBoard, placeToken };
 }
 
@@ -46,8 +46,23 @@ function gameController() {
 
     };
 
-    let cellPos = 4
-    playRound(cellPos);
+    return { playRound, getActivePlayer, getBoard: board.getBoard };
 }
 
-gameController();
+function displayController() {
+    const game = gameController();
+    const gameStateDisplay = document.querySelector('.gamestate');
+    const boardDiv = document.querySelector('.gameboard');
+
+    const updateScreen = () => {
+        boardDiv.textContent = "";
+        const board = game.getBoard();
+        const activePlayer = game.getActivePlayer();
+
+        gameStateDisplay.textContent = `${activePlayer.name}'s turn.`;
+    };
+
+    updateScreen();
+}
+
+displayController();
