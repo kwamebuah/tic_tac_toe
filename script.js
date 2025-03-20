@@ -50,11 +50,9 @@ function GameBoard() {
     return { getBoard, placeToken, checkWin };
 }
 
-function gameController() {
+function gameController(playerOneName = "Player One", playerTwoName = "Player Two") {
     const board = GameBoard();
 
-    let playerOneName = "Player One";
-    let playerTwoName = "Player Two";
     const players = [
         {
             name: playerOneName,
@@ -103,51 +101,67 @@ function gameController() {
     return { playRound, getActivePlayer, getBoard: board.getBoard, getRoundState, getWinMessage };
 }
 
-function displayController() {
-    const game = gameController();
-    const gameStateDisplay = document.querySelector('.gamestate');
-    const boardDiv = document.querySelector('.gameboard');
-
-    const updateScreen = () => {
-        boardDiv.textContent = "";
-        const board = game.getBoard();
-        const activePlayer = game.getActivePlayer();
-
-        if (game.getRoundState()) {
-            gameStateDisplay.textContent = game.getWinMessage();
-        }
-        else { gameStateDisplay.textContent = `${activePlayer.name}'s turn.`; }
-        for (let i = 0; i < board.length; i++) {
-            const cell = document.createElement('button');
-            cell.classList.add('cell');
-            cell.dataset.idx = i + 1;
-            cell.textContent = board[i];
-            boardDiv.appendChild(cell);
-        }
+function startGame() {
+    const getPlayerNames = () => {
+        const getPlayerNameBtn = document.querySelector('form button');
+        const modal = document.querySelector('dialog');
+        modal.showModal();
+        getPlayerNameBtn.addEventListener('click', event => {
+            event.preventDefault();
+            const playerOneName = document.querySelector('#player1name');
+            const playerTwoName = document.querySelector('#player2name');
+            modal.close();
+            displayController(playerOneName.value, playerTwoName.value);
+        });
     };
+    getPlayerNames();
 
-    const endRound = () => {
-        const cells = document.querySelectorAll('.cell');
-        for (let cell of cells) {
-            cell.disabled = true;
-        }
-    };
-
-    boardDiv.addEventListener('click', (event) => {
-        const selectedCell = event.target.dataset.idx;
-        // make sure we actually select a cell and not an empty gap
-        if (!selectedCell) return;
-        // check for already clicked cell
-        if (event.target.textContent !== "") return;
-        game.playRound(selectedCell);
+    function displayController(playerOneName, playerTwoName) {
+        const game = gameController(playerOneName, playerTwoName);
+        const gameStateDisplay = document.querySelector('.gamestate');
+        const boardDiv = document.querySelector('.gameboard');
+    
+        const updateScreen = () => {
+            boardDiv.textContent = "";
+            const board = game.getBoard();
+            const activePlayer = game.getActivePlayer();
+    
+            if (game.getRoundState()) {
+                gameStateDisplay.textContent = game.getWinMessage();
+            }
+            else { gameStateDisplay.textContent = `${activePlayer.name}'s turn.`; }
+            for (let i = 0; i < board.length; i++) {
+                const cell = document.createElement('button');
+                cell.classList.add('cell');
+                cell.dataset.idx = i + 1;
+                cell.textContent = board[i];
+                boardDiv.appendChild(cell);
+            }
+        };
+    
+        const endRound = () => {
+            const cells = document.querySelectorAll('.cell');
+            for (let cell of cells) {
+                cell.disabled = true;
+            }
+        };
+    
+        boardDiv.addEventListener('click', (event) => {
+            const selectedCell = event.target.dataset.idx;
+            // make sure we actually select a cell and not an empty gap
+            if (!selectedCell) return;
+            // check for already clicked cell
+            if (event.target.textContent !== "") return;
+            game.playRound(selectedCell);
+            updateScreen();
+            if (game.getRoundState()) {
+                endRound();
+            }
+        });
+    
+        // Initial screen update
         updateScreen();
-        if (game.getRoundState()) {
-            endRound();
-        }
-    });
-
-    // Initial screen update
-    updateScreen();
+    }
 }
 
-displayController();
+startGame();
