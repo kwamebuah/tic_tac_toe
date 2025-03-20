@@ -50,7 +50,7 @@ function GameBoard() {
     return { getBoard, placeToken, checkWin };
 }
 
-function gameController(playerOneName = "Player One", playerTwoName = "Player Two") {
+function gameController(playerOneName, playerTwoName) {
     const board = GameBoard();
 
     const players = [
@@ -105,6 +105,9 @@ function startGame() {
             event.preventDefault();
             const playerOneName = document.querySelector('#player1name');
             const playerTwoName = document.querySelector('#player2name');
+
+            playerOneName.value = playerOneName.value === "" ? 'Player One': playerOneName.value;
+            playerTwoName.value = playerTwoName.value === "" ? 'Player Two': playerTwoName.value;
             modal.close();
             displayController(playerOneName.value, playerTwoName.value);
         });
