@@ -119,6 +119,10 @@ function startGame() {
         const gameStateDisplay = document.querySelector('.gamestate');
         const boardDiv = document.querySelector('.gameboard');
         const restartBtn = document.querySelector('.restart');
+
+        const showRestartBtn = () => {
+            restartBtn.style.visibility = 'visible';
+        };
     
         const updateScreen = () => {
             boardDiv.textContent = "";
@@ -177,6 +181,7 @@ function startGame() {
     
         // Initial screen update
         updateScreen();
+        showRestartBtn();
     }
 }
 
