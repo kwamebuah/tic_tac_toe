@@ -78,16 +78,19 @@ function gameController() {
     };
     const getRoundState = () => roundEnd;
 
+    let winMessage = "";
+    const getWinMessage = () => winMessage;
+
     const playRound = (cell) => {
         board.placeToken(cell, getActivePlayer().token);
 
         const { hasWin, winToken, tie } = board.checkWin(board.getBoard());
         if (hasWin && winToken === activePlayer.token) {
-            console.log(`${activePlayer.name} wins`);
+            winMessage = `${activePlayer.name} wins`;
             endRound();
         }
         else if (tie) {
-            console.log("It's a tie");
+            winMessage = "It's a tie";
             endRound();
         }
 
@@ -97,7 +100,7 @@ function gameController() {
 
 
 
-    return { playRound, getActivePlayer, getBoard: board.getBoard, getRoundState };
+    return { playRound, getActivePlayer, getBoard: board.getBoard, getRoundState, getWinMessage };
 }
 
 function displayController() {
@@ -110,7 +113,10 @@ function displayController() {
         const board = game.getBoard();
         const activePlayer = game.getActivePlayer();
 
-        gameStateDisplay.textContent = `${activePlayer.name}'s turn.`;
+        if (game.getRoundState()) {
+            gameStateDisplay.textContent = game.getWinMessage();
+        }
+        else { gameStateDisplay.textContent = `${activePlayer.name}'s turn.`; }
         for (let i = 0; i < board.length; i++) {
             const cell = document.createElement('button');
             cell.classList.add('cell');
