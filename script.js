@@ -97,7 +97,7 @@ function gameController(playerOneName, playerTwoName) {
     return { playRound, getActivePlayer, getBoard: board.getBoard, getRoundState, getWinMessage };
 }
 
-function startGame() {
+(function startGame() {
     const getPlayerNames = () => {
         const getPlayerNameBtn = document.querySelector('form button');
         const modal = document.querySelector('dialog');
@@ -184,6 +184,4 @@ function startGame() {
         updateScreen();
         showRestartBtn();
     }
-}
-
-startGame();
+})();
