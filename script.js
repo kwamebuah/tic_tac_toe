@@ -91,13 +91,8 @@ function gameController(playerOneName = "Player One", playerTwoName = "Player Tw
             winMessage = "It's a tie";
             endRound();
         }
-
         switchTurn();
-
     };
-
-
-
     return { playRound, getActivePlayer, getBoard: board.getBoard, getRoundState, getWinMessage };
 }
 
