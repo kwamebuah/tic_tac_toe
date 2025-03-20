@@ -120,6 +120,7 @@ function startGame() {
         const game = gameController(playerOneName, playerTwoName);
         const gameStateDisplay = document.querySelector('.gamestate');
         const boardDiv = document.querySelector('.gameboard');
+        const restartBtn = document.querySelector('.restart');
     
         const updateScreen = () => {
             boardDiv.textContent = "";
@@ -145,6 +146,22 @@ function startGame() {
                 cell.disabled = true;
             }
         };
+
+        const restart = () => {
+            restartBtn.addEventListener('click', () => {
+                const board = game.getBoard();
+                const cells = document.querySelectorAll('.cell');
+        
+                for (let i = 0; i < board.length; i++) {
+                    board[i] = "";
+                }
+
+                for (let cell of cells) {
+                    cell.disabled = false;
+                    cell.textContent = "";
+                }
+            });
+        };
     
         boardDiv.addEventListener('click', (event) => {
             const selectedCell = event.target.dataset.idx;
@@ -156,6 +173,7 @@ function startGame() {
             updateScreen();
             if (game.getRoundState()) {
                 endRound();
+                restart();
             }
         });
     
