@@ -80,6 +80,7 @@ function gameController(playerOneName, playerTwoName) {
     const getWinMessage = () => winMessage;
 
     const playRound = (cell) => {
+        roundEnd = false;
         board.placeToken(cell, getActivePlayer().token);
 
         const { hasWin, winToken, tie } = board.checkWin(board.getBoard());
