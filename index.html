@@ -12,18 +12,24 @@
 
     <dialog>
         <form>
-            <label for="player1name">Player One Name: </label>
-            <input type="text" id="player1name" name="player1name">
-            <label for="player2name">Player Two Name: </label>
-            <input type="text" id="player2name" name="player2name">
-            <button>Start Game</button>
+            <h2>Tic Tac Toe</h2>
+            <p>
+                <label for="player1name">Player One Name: </label>
+                <input type="text" id="player1name" name="player1name">
+            </p>
+            <p>
+                <label for="player2name">Player Two Name: </label>
+                <input type="text" id="player2name" name="player2name">
+            </p>
+            <p><button>Start Game</button></p>
         </form>
     </dialog>
 
-    <h1 class="gamestate"></h1>
-    <div class="gameboard"></div>
-
-    <button class="restart">Restart</button>
+    <section>
+        <h2 class="gamestate"></h2>
+        <div class="gameboard"></div>
+        <button class="restart">Restart</button>
+    </section>
     <script src="script.js">
     </script>
 </body>
